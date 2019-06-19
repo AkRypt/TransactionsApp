@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1050299578351",
+    "firebase_url": "https://transactionsapp-2d7a8.firebaseio.com",
+    "project_id": "transactionsapp-2d7a8",
+    "storage_bucket": "transactionsapp-2d7a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050299578351:android:7ae3b4d6ca6325f7",
+        "android_client_info": {
+          "package_name": "com.example.transactionsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1050299578351-sgs66f7k73thnidomqifphqnvev8hllc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.transactionsapp",
+            "certificate_hash": "bed31baedcc82eff0d38b968e27f20ff059af251"
+          }
+        },
+        {
+          "client_id": "1050299578351-h0708akcfsi90qh9t3g9q5n14d3qout9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAX5D9ClUEea5oDgktO-9it85n9yYDnzlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1050299578351-h0708akcfsi90qh9t3g9q5n14d3qout9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

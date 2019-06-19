@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rLay"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@android:color/primary_text_light"
+        android:text="Received/Paid:"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="80dp"/>
+
+    <EditText
+        android:id="@+id/amount"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textSize="20sp"
+        android:layout_marginTop="90dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="80dp"
+        android:background="@drawable/left_background"
+        android:hint="Enter amount"
+        android:paddingHorizontal="20dp"
+        android:text=""
+        android:elevation="4dp"
+        android:inputType="number"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_below="@+id/amount"
+        android:textColor="@android:color/primary_text_light"
+        android:text="From/To:"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="80dp"/>
+
+    <EditText
+        android:id="@+id/person"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/amount"
+        android:textSize="20sp"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/left_background"
+        android:hint="Enter name of person"
+        android:paddingHorizontal="20dp"
+        android:text=""
+        android:elevation="4dp"
+        android:inputType="textCapWords"/>
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/person"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/left_background"
+        android:hint="Description"
+        android:paddingHorizontal="20dp"
+        android:text=""
+        android:elevation="4dp"
+        android:inputType="textCapSentences"/>
+
+    <!--<DatePicker-->
+        <!--android:id="@+id/date"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="80dp"-->
+        <!--style="@android:style/Widget.DatePicker"-->
+        <!--android:layout_below="@id/person"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:layout_centerHorizontal="true"/>-->
+
+
+    <Button
+        android:id="@+id/received"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="40dp"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/back_fab"
+        android:text="Received"/>
+
+    <Button
+        android:id="@+id/paid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="90dp"
+        android:layout_marginTop="40dp"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/back_fab"
+        android:text="Paid"/>
+
+</RelativeLayout>
