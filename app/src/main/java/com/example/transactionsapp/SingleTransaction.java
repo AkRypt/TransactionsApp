@@ -16,13 +16,14 @@ public class SingleTransaction {
         desc = descx;
     }
 
-//    public SingleTransaction(String modex, String personNamex, int amt, String datex, String timex) {
-//        mode = modex;
-//        personName = personNamex;
-//        amount = amt;
-//        date = datex;
-//        time = timex;
-//    }
+    public SingleTransaction(String amt, String modex, String personNamex, String descx, String datex, String timex) {
+        mode = modex;
+        personName = personNamex;
+        amount = String.valueOf(amt);
+        desc = descx;
+        date = datex;
+        time = timex;
+    }
 
     public String getMode() {
         return mode;

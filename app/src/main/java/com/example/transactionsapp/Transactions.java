@@ -69,12 +69,14 @@ public class Transactions extends Fragment {
                     String amt = ds.child("amount").getValue().toString();
                     String name = ds.child("personName").getValue().toString();
                     String desc = ds.child("desc").getValue().toString();
+                    String date = ds.child("date").getValue().toString();
+                    String time = ds.child("time").getValue().toString();
                     if (mode.matches("(.*)Received(.*)")) {
                         amt = "+" + amt;
                     } else {
                         amt = "-" + amt;
                     }
-                    singleTransaction.add(0, new SingleTransaction(amt, mode, name, desc));
+                    singleTransaction.add(0, new SingleTransaction(amt, mode, name, desc, date, time));
                     transAdapter.notifyDataSetChanged();
                 }
                 loading.setVisibility(View.GONE);
