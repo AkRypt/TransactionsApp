@@ -71,6 +71,7 @@ public class Entry extends Fragment {
                 }
             }
         };
+//        mAuth.addAuthStateListener(mAuthStateListener);
 
         amountEditText = rootView.findViewById(R.id.amount);
         person = rootView.findViewById(R.id.person);
@@ -128,8 +129,14 @@ public class Entry extends Fragment {
                     time = timeView.getText().toString();
 
                     //Pushing to database
-                    SingleTransaction singleTransaction = new SingleTransaction(amount, mode, personName, desc, date, time);
-                    dbRef.push().setValue(singleTransaction);
+                    if (dbRef == dbRef.child(user)) {
+                        SingleTransaction singleTransaction = new SingleTransaction(amount, mode, personName, desc, date, time);
+                        dbRef.push().setValue(singleTransaction);
+                    } else {
+                        dbRef = dbRef.child(user);
+                        SingleTransaction singleTransaction = new SingleTransaction(amount, mode, personName, desc, date, time);
+                        dbRef.push().setValue(singleTransaction);
+                    }
 
                     amountEditText.setText("");
                     person.setText("");
@@ -152,8 +159,14 @@ public class Entry extends Fragment {
                     time = timeView.getText().toString();
 
                     //Pushing to database
-                    SingleTransaction singleTransaction = new SingleTransaction(amount, mode, personName, desc, date, time);
-                    dbRef.push().setValue(singleTransaction);
+                    if (dbRef == dbRef.child(user)) {
+                        SingleTransaction singleTransaction = new SingleTransaction(amount, mode, personName, desc, date, time);
+                        dbRef.push().setValue(singleTransaction);
+                    } else {
+                        dbRef = dbRef.child(user);
+                        SingleTransaction singleTransaction = new SingleTransaction(amount, mode, personName, desc, date, time);
+                        dbRef.push().setValue(singleTransaction);
+                    }
 
                     amountEditText.setText("");
                     person.setText("");
@@ -184,9 +197,4 @@ public class Entry extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mAuth.addAuthStateListener(mAuthStateListener);
-    }
 }
