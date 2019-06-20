@@ -1,24 +1,20 @@
 package com.example.transactionsapp;
 
+
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Transactions extends Fragment {
@@ -40,7 +35,6 @@ public class Transactions extends Fragment {
 
     private DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
 
-    FirebaseAuth mAuth;
 
     @Nullable
     @Override
@@ -48,12 +42,12 @@ public class Transactions extends Fragment {
         View rootView = inflater.inflate(R.layout.transactions, container, false);
         getActivity().setTitle("Your Transactions");
 
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+        final String user = prefs.getString("user", null);
+
         loading = rootView.findViewById(R.id.progressBar);
         loading.setVisibility(View.VISIBLE);
         nothing = rootView.findViewById(R.id.nothing);
-
-        mAuth = FirebaseAuth.getInstance();
-        final String user = mAuth.getUid();
 
         transactionsList = rootView.findViewById(R.id.transactionsList);
         transAdapter = new TransactionsAdapter(getContext(), R.layout.transactions_list, singleTransaction);
@@ -100,20 +94,3 @@ public class Transactions extends Fragment {
         return rootView;
     }
 }
-
-
-
-//        transactionsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                openDialog();
-//                return false;
-//            }
-//        });
-
-
-//    public void openDialog() {
-//        DeleteDialog deleteDialog = new DeleteDialog();
-//        deleteDialog.show(getFragmentManager(), "Delete");
-//    }
-

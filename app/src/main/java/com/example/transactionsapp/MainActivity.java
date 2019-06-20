@@ -1,5 +1,6 @@
 package com.example.transactionsapp;
 
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -24,27 +25,28 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    // For Authentication
     private static final int RC_SIGN_IN = 1;
+    // For Shared Preferences
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
 
-    private FirebaseAuth mAuth;
+    // Firebase Authentication
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // For Bottom Navigation and Fragments
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
-
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Entry()).commit();
-
-        mAuth = FirebaseAuth.getInstance();
-
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment selectedFrag = null;
-
                 switch (menuItem.getItemId()) {
                     case R.id.entry:
                         selectedFrag = new Entry();
@@ -56,20 +58,25 @@ public class MainActivity extends AppCompatActivity {
                         selectedFrag = new Info();
                         break;
                 }
-
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFrag).commit();
-
                 return true;
             }
         });
 
+
+        // For Authentication - Checks if user is authenticated or not
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                FirebaseUser userx = firebaseAuth.getCurrentUser();
 
-                if (user != null) {
+                if (userx != null) {
                     Toast.makeText(MainActivity.this, "You're now logged in!", Toast.LENGTH_SHORT).show();
+                    user = mAuth.getUid();
+                    // Sending user uid to all Activities
+                    SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                    editor.putString("user", user);
+                    editor.apply();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Entry()).commit();
                 } else {
                     startActivityForResult(
@@ -83,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
 
     }
 
