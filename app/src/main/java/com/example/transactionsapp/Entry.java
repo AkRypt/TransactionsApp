@@ -67,7 +67,18 @@ public class Entry extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getUid();
-        dbRef = dbRef.child(user);
+        
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (user != null) {
+                    dbRef = dbRef.child(user);
+                } else {
+
+                }
+            }
+        };
+        mAuth.addAuthStateListener(mAuthStateListener);
 
         dateView.setOnClickListener(new View.OnClickListener() {
             @Override
