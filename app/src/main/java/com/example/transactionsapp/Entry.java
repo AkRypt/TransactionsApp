@@ -20,12 +20,19 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class Entry extends Fragment {
+
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     private EditText amountEditText, person, description;
     private Button received, paid, dateView, timeView;
@@ -52,15 +59,27 @@ public class Entry extends Fragment {
         // Getting user uid to refer to particular user in database
         SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
         user = prefs.getString("user", null);
-        dbRef = dbRef.child(user);
+
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser userx = firebaseAuth.getCurrentUser();
+                if (userx != null) {
+                    dbRef = dbRef.child(user);
+                } else {
+
+                }
+            }
+        };
 
         amountEditText = rootView.findViewById(R.id.amount);
         person = rootView.findViewById(R.id.person);
         description = rootView.findViewById(R.id.description);
-        dateView = rootView.findViewById(R.id.date);
-        timeView = rootView.findViewById(R.id.time);
         received = rootView.findViewById(R.id.received);
         paid = rootView.findViewById(R.id.paid);
+        dateView = rootView.findViewById(R.id.date);
+        timeView = rootView.findViewById(R.id.time);
+
 
         // For choosing Date
         dateView.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +121,20 @@ public class Entry extends Fragment {
             public void onClick(View view) {
                 if (amountEditText.getText().length() > 0 && person.getText().length() > 0){
                     mode = received.getText() + " from:";
-                    pushToDb(mode);
+                    amount = amountEditText.getText().toString();
+                    personName = person.getText().toString().trim();
+                    desc = description.getText().toString().trim();
+                    date = dateView.getText().toString();
+                    time = timeView.getText().toString();
+
+                    //Pushing to database
+                    SingleTransaction singleTransaction = new SingleTransaction(amount, mode, personName, desc, date, time);
+                    dbRef.push().setValue(singleTransaction);
+
+                    amountEditText.setText("");
+                    person.setText("");
+                    description.setText("");
+                    Toast.makeText(getContext(), "Your transaction has been recorded!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Please fill the required fields!", Toast.LENGTH_SHORT).show();
                 }
@@ -113,7 +145,20 @@ public class Entry extends Fragment {
             public void onClick(View view) {
                 if (amountEditText.getText().length() > 0 && person.getText().length() > 0){
                     mode = paid.getText()+" to:";
-                    pushToDb(mode);
+                    amount = amountEditText.getText().toString();
+                    personName = person.getText().toString().trim();
+                    desc = description.getText().toString().trim();
+                    date = dateView.getText().toString();
+                    time = timeView.getText().toString();
+
+                    //Pushing to database
+                    SingleTransaction singleTransaction = new SingleTransaction(amount, mode, personName, desc, date, time);
+                    dbRef.push().setValue(singleTransaction);
+
+                    amountEditText.setText("");
+                    person.setText("");
+                    description.setText("");
+                    Toast.makeText(getContext(), "Your transaction has been recorded!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Please fill the required fields!", Toast.LENGTH_SHORT).show();
                 }
@@ -121,23 +166,6 @@ public class Entry extends Fragment {
         });
 
         return rootView;
-    }
-
-    public void pushToDb(String mode) {
-        amount = amountEditText.getText().toString();
-        personName = person.getText().toString().trim();
-        desc = description.getText().toString().trim();
-        date = dateView.getText().toString();
-        time = timeView.getText().toString();
-
-        //Pushing to database
-        SingleTransaction singleTransaction = new SingleTransaction(amount, mode, personName, desc, date, time);
-        dbRef.push().setValue(singleTransaction);
-
-        amountEditText.setText("");
-        person.setText("");
-        description.setText("");
-        Toast.makeText(getContext(), "Your transaction has been recorded!", Toast.LENGTH_SHORT).show();
     }
 
     // For Time Format
@@ -154,5 +182,11 @@ public class Entry extends Fragment {
         } else {
             format = "AM";
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAuth.addAuthStateListener(mAuthStateListener);
     }
 }
