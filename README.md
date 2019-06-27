@@ -15,3 +15,10 @@ In this app, There are three fragments:
   database.
 
 Every email will have a separate set of transactions and other emails have no access to a specific email's transactions.
+
+
+![Entry](https://imgur.com/Zqq93aD.jpg)
+
+![Transactions](https://imgur.com/XBVc24b.jpg)
+
+![Info](https://imgur.com/MQyXqg1.jpg)
