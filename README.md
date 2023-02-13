@@ -17,8 +17,7 @@ In this app, There are three fragments:
 Every email will have a separate set of transactions and other emails have no access to a specific email's transactions.
 
 
-![Entry](https://imgur.com/Zqq93aD.jpg)
 
-![Transactions](https://imgur.com/XBVc24b.jpg)
 
-![Info](https://imgur.com/MQyXqg1.jpg)
+<img src="https://imgur.com/Zqq93aD.jpg" style="width: 300px"> <img src="https://imgur.com/XBVc24b.jpg" style="width: 300px">
+<img src="https://imgur.com/MQyXqg1.jpg" style="width: 300px">
